@@ -137,3 +137,65 @@ postForm.addEventListener('submit', (event) => {
         console.error('POST Error:', error);
     });
 });
+
+// --- Task 4: PUT request with XMLHttpRequest  ---
+
+// DOM elements for PUT request and ID input
+const putBtn = document.getElementById('putBtn');
+const postIdInput = document.getElementById('postId');
+
+// Event listener for PUT button click
+putBtn.addEventListener('click', () => {
+    const postId = postIdInput.value;
+    
+    // Check if postId is provided
+    if (!postId) {
+        resultsDiv.innerHTML = '<p class="error">Please enter a Post ID to update.</p>';
+        return;
+    }
+    
+    // Dynamic API endpoint
+    const apiUrl = `https://jsonplaceholder.typicode.com/posts/${postId}`;
+    
+    // Data to update
+    const updateData = {
+        id: postId,
+        title: postTitleInput.value,
+        body: postBodyInput.value,
+        userId: 1,
+    };
+    
+    resultsDiv.innerHTML = `<p>Sending PUT request for post ID: ${postId}...</p>`;
+    
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', apiUrl, true);
+    
+    // Setting header for JSON content
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+    
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            const data = JSON.parse(xhr.responseText);
+            // Başarılı yanıtı ekranda göster
+            resultsDiv.innerHTML = `
+                <p class="success">Post ${data.id} updated successfully!</p>
+                <div class="post">
+                    <p class="post-title">${data.title}</p>
+                    <p>${data.body}</p>
+                </div>
+            `;
+            postForm.reset();
+        } else {
+            resultsDiv.innerHTML = `<p class="error">Error updating post: Server responded with status ${xhr.status}</p>`;
+            console.error('PUT Error:', xhr.statusText);
+        }
+    };
+    
+    xhr.onerror = function () {
+        resultsDiv.innerHTML = '<p class="error">Error updating post: Network request failed.</p>';
+        console.error('PUT Network Error');
+    };
+    
+    // Sending the PUT request with JSON formatted data
+    xhr.send(JSON.stringify(updateData));
+});
