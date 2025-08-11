@@ -32,11 +32,11 @@ button:hover {
 }
 
 #putBtn {
-    background-color: orange;
+    background-color: darkorange;
 }
 
 #putBtn:hover {
-    background-color: darkorange;
+    background-color: orange;
 }
 
 .controls {
