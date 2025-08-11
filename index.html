@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 10 - API Calls in JavaScript</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <h1>Lab 10 - API Calls in JavaScript</h1>
+
+    <div class="controls">
+        <button id="fetchBtn">Fetch Data with fetch()</button>
+        <button id="xhrBtn">Fetch Data with XHR</button>
+    </div>
+
+    <hr>
+
+    <div class="form-container">
+        <h2>Send/Update Data</h2>
+        <form id="postForm">
+            <input type="text" id="postTitle" placeholder="Enter post title" required>
+            <input type="text" id="postBody" placeholder="Enter post body" required>
+            <input type="number" id="postId" placeholder="Post ID (for UPDATE)">
+            <div class="form-buttons">
+                <button type="submit" id="postBtn">Create Post (POST)</button>
+                <button type="button" id="putBtn">Update Post (PUT)</button>
+            </div>
+        </form>
+    </div>
+
+    <hr>
+
+    <h2>Results</h2>
+    <div id="results">
+        <p>Data from API calls will be displayed here.</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
