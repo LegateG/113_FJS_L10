@@ -81,3 +81,59 @@ xhrBtn.addEventListener('click', () => {
     
     xhr.send();
 });
+
+// --- Task 3: POST Request with fetch() ---
+
+// Form elements
+const postForm = document.getElementById('postForm');
+const postTitleInput = document.getElementById('postTitle');
+const postBodyInput = document.getElementById('postBody');
+
+// Event listener for form submission
+postForm.addEventListener('submit', (event) => {
+    // Block default form submission
+    event.preventDefault();
+
+    // API endpoint
+    const apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+    
+    // Data from the form
+    const postData = {
+        title: postTitleInput.value,
+        body: postBodyInput.value,
+        userId: 1, // sample user ID
+    };
+    
+    resultsDiv.innerHTML = '<p>Sending POST request...</p>';
+    
+    fetch(apiUrl, {
+        method: 'POST', // request method
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8', // Content type
+        },
+        body: JSON.stringify(postData), // convert data to JSON
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Display the success result
+        resultsDiv.innerHTML = `
+            <p class="success">Post created successfully!</p>
+            <div class="post">
+                <p><strong>ID:</strong> ${data.id}</p>
+                <p class="post-title">${data.title}</p>
+                <p>${data.body}</p>
+            </div>
+        `;
+        postForm.reset(); // reset the form
+    })
+    .catch(error => {
+        // error display
+        resultsDiv.innerHTML = `<p class="error">Error creating post: ${error.message}</p>`;
+        console.error('POST Error:', error);
+    });
+});
